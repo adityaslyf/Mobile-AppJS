@@ -20,12 +20,20 @@ const database = getDatabase(app);
 const shoppingListInDB = ref(database, "shoppingList");
 
 onValue(shoppingListInDB, function (snapshot) {
-  let ArrayBook = Object.values(snapshot.val());
+  let ArrayBook = Object.entries(snapshot.val());
+empty();
   for (let i = 0; i < ArrayBook.length; i++) {
-    console.log(ArrayBook[i]);
+    let currentElement = ArrayBook[i]
+    let CurrentItemID= currentElement[0]
+    let CurrentItemValue= currentElement[1]
+
+    renderItems(currentElement)
+    // deleteButtonLi(currentElement)
   }
 
-  console.log(ArrayBook);
+
+  // console.log(currentElement);
+
 });
 
 /*
@@ -54,7 +62,11 @@ function empty() {
 }
 
 function renderItems(itemValue) {
-  shoppingList.innerHTML += `<li>${itemValue}</li>`;
+  // shoppingList.innerHTML += `<li>${itemValue}</li>`;
+  let newEl = document.createElement("li")
+  newEl.textContent = itemValue
+  shoppingList.append(newEl)
+
 }
 
 // my doubt in the above code was that if i pass and put itemValue or inpuTValue bith works the same in the li and and as a parameter so in js it does not mean to that the parameter needs to be same as that of variable ex- below code will also do the same
